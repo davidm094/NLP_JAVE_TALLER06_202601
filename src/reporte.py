@@ -106,7 +106,7 @@ E += [p(
 E += h1("1. Generación de texto con un libro")
 E += [p("1.1 Libro y preparación", H2), p(
     f"<b>Libro:</b> <i>Rebelión en la granja</i> (<i>Animal Farm</i>, George Orwell, 1945), en la traducción al español de "
-    f"Marcial Souto. Lo eligió el grupo porque David Moreno lo leyó. La obra <b>no es de dominio público en Colombia</b>: Orwell "
+    f"Marcial Souto. Es un libro que leímos ambos integrantes del grupo. La obra <b>no es de dominio público en Colombia</b>: Orwell "
     f"murió en 1950 y aquí la protección dura la vida del autor más 80 años, hasta el 1 de enero de 2031. Se usa solo para entrenar "
     f"el modelo en esta actividad académica sin fines comerciales, y por eso el texto <b>no está en el repositorio</b>: el código lo "
     f"lee de una copia propia en epub (<code>data/Rebelion_en_la_granja.epub</code>, excluida en <code>.gitignore</code>).")]

@@ -6,7 +6,7 @@
 Adaptación del notebook de clase (*Deep Learning with Python*, 3a ed., cap. 15: "Language models and the Transformer")
 a dos tareas:
 
-1. **Generación de texto:** modelo de lenguaje por caracteres (GRU) entrenado con *Rebelión en la granja*
+1. **Generación de texto:** modelo de lenguaje por caracteres (GRU) entrenado con *Rebelión en la granja*, libro que leímos ambos integrantes
    (George Orwell, 1945; trad. de Marcial Souto).
 2. **Traducción español → inglés:** seq2seq con GRU (codificador bidireccional) sobre *Combined Data es-ES*, evaluado con
    **BLEU**, **ROUGE-1/2/L** y **F1**, implementados en `src/metricas.py` y validados contra `sacrebleu` y `rouge-score`.

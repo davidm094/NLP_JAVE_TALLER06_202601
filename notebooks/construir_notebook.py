@@ -18,7 +18,7 @@ md(f"""# Taller 06 — Generación de texto y traducción seq2seq
 Adaptación del notebook de clase (*Deep Learning with Python*, 3a ed., cap. 15):
 
 1. **Generación de texto:** modelo de lenguaje por caracteres (GRU) entrenado con *Rebelión en la granja*
-   (George Orwell, 1945; trad. de Marcial Souto), elegido por el grupo porque David Moreno lo leyó.
+   (George Orwell, 1945; trad. de Marcial Souto), libro que leímos ambos integrantes del grupo.
 2. **Traducción español → inglés:** seq2seq con GRU (codificador bidireccional) sobre *Combined Data es-ES*,
    evaluado con **BLEU**, **ROUGE** y **F1**.
 
