@@ -1,0 +1,16 @@
+{
+ "libro": "Rebelión en la granja — George Orwell (1945), trad. de Marcial Souto",
+ "caracteres": 171088,
+ "vocab": 84,
+ "secuencias_train": 1540,
+ "secuencias_val": 172,
+ "oculto": 512,
+ "epocas_corridas": 29,
+ "mejor_epoca": 26,
+ "val_loss": 1.4249016046524048,
+ "val_acc": 0.5840697884559631,
+ "perplejidad_val": 4.157448749015108,
+ "train_loss_mejor": 1.0987097024917603,
+ "train_acc_mejor": 0.6593311429023743,
+ "minutos": 8.577654818693796
+}

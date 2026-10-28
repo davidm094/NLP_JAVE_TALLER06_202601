@@ -1,0 +1,12 @@
+tensorflow>=2.16
+keras>=3.0
+numpy
+pandas
+sacrebleu>=2.4
+rouge-score
+matplotlib
+nbformat
+nbconvert
+ipykernel
+reportlab
+pillow

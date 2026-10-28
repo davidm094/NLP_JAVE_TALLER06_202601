@@ -1,0 +1,8 @@
+__pycache__/
+.ipynb_checkpoints/
+data/*.csv
+results/seq2seq_*.keras
+results/log_*.txt
+results/FIN
+# Libro con derechos de autor vigentes en Colombia: no se distribuye
+data/*.epub

@@ -1,0 +1,44 @@
+{
+ "datos": {
+  "filas": 53043,
+  "pares_validos": 52671,
+  "cortos": 15045,
+  "sin_duplicados": 14772,
+  "sin_identicos": 13940
+ },
+ "train": 9758,
+ "val": 2091,
+ "test": 2091,
+ "vocab_es": 13495,
+ "vocab_en": 11987,
+ "unk_test_es": 0.09650730481227418,
+ "oculto": 1024,
+ "epocas_corridas": 7,
+ "mejor_epoca": 4,
+ "val_loss": 2.7759711742401123,
+ "val_acc": 0.2659698724746704,
+ "minutos_entrenamiento": 30.870100049177804,
+ "minutos_decodificacion": 4.884782159328461,
+ "metricas_test": {
+  "BLEU": 3.3173312148797054,
+  "BLEU_detalle": "BLEU = 3.32 | precisiones 1-4: 21.9/5.2/1.8/0.7 | BP = 0.955",
+  "ROUGE1": 21.881329030353896,
+  "ROUGE2": 5.728531495720433,
+  "ROUGEL": 21.06499782625709,
+  "F1": 21.806179255401116,
+  "Precision": 23.29211973409685,
+  "Recall": 21.386341290374943,
+  "exactas": 0.38259206121472983
+ },
+ "linea_base_copiar_espanol": {
+  "BLEU": 3.4727290376959714,
+  "BLEU_detalle": "BLEU = 3.47 | precisiones 1-4: 10.9/4.0/2.3/1.5 | BP = 0.985",
+  "ROUGE1": 10.215233893807312,
+  "ROUGE2": 3.22934189039729,
+  "ROUGEL": 10.118134907627551,
+  "F1": 10.50299094471053,
+  "Precision": 10.609515692478501,
+  "Recall": 10.600756288794587,
+  "exactas": 0.0
+ }
+}

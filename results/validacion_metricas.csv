@@ -1,0 +1,6 @@
+metrica,propia,libreria,libreria_nombre,max_dif_por_frase,diferencia
+BLEU (corpus),3.3173312148797054,3.317331214879706,sacrebleu.corpus_bleu(tokenize='none'),,-4.440892098500626e-16
+"BLEU (corpus), tokenizador 13a",,3.31397564039954,"sacrebleu.corpus_bleu (por defecto, 13a)",,
+ROUGE-1 (promedio),21.881329030353896,21.881329030353896,rouge_score.RougeScorer,0.0,0.0
+ROUGE-2 (promedio),5.728531495720433,5.728531495720433,rouge_score.RougeScorer,0.0,0.0
+ROUGE-L (promedio),21.06499782625709,21.06499782625709,rouge_score.RougeScorer,0.0,0.0
