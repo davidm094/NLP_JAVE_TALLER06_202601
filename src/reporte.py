@@ -17,6 +17,7 @@ from reportlab.platypus import (CondPageBreak, Image, KeepTogether, Paragraph, S
 
 sys.path.insert(0, str(Path(__file__).parent))
 import figuras as F
+import diagramas as DG
 from libro import PROMPTS
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -74,6 +75,7 @@ def bloque(texto, max_chars=None):
 
 # ------------------------------------------------------------------ datos
 F.todas()
+DG.todas()
 G = json.load(open(RES / "resumen_generacion.json"))
 MU = json.load(open(RES / "muestras_generacion.json"))
 TR = json.load(open(RES / "resumen_traduccion.json"))
@@ -103,7 +105,19 @@ E += [p(
     f"frecuente del inglés, no a conservar el significado de la frase.")]
 
 # ================================================================ PARTE 1
+E += h1("Arquitectura de la solución", 8)
+E += [p(
+    "La solución tiene dos pipelines independientes que comparten la misma organización de código (Figura 1): los datos entran "
+    "por <code>src/</code>, cada etapa guarda lo que produce en <code>results/</code> (modelos, historias de entrenamiento, "
+    "muestras, traducciones y métricas), y el reporte, las figuras y el notebook se generan leyendo solo de <code>results/</code>. "
+    "Así ninguna cifra del reporte se copia a mano. La Figura 2 muestra las dos redes con sus dimensiones."),
+      fig("arquitectura_codigo.png", 16, "Figura 1. Arquitectura del código: datos, módulos de src/, resultados y entregables."),
+      fig("arquitectura_modelos.png", 16, "Figura 2. Arquitectura de los modelos. Izquierda: modelo de lenguaje por caracteres "
+          "(formas de los tensores en las flechas). Derecha: seq2seq; el estado final del codificador (flecha naranja) es el estado "
+          "inicial de la GRU del decodificador.")]
+
 E += h1("1. Generación de texto con un libro")
+E += [fig("pipeline_generacion.png", 13.5, "Figura 3. Pipeline de la Parte 1, de la carga del libro a la evaluación del texto generado.")]
 E += [p("1.1 Libro y preparación", H2), p(
     f"<b>Libro:</b> <i>Rebelión en la granja</i> (<i>Animal Farm</i>, George Orwell, 1945), en la traducción al español de "
     f"Marcial Souto. Es un libro que leímos ambos integrantes del grupo. La obra <b>no es de dominio público en Colombia</b>: Orwell "
@@ -124,7 +138,7 @@ E += [p("1.2 Modelo", H2), p(
     f"Embedding de 256 → GRU con <code>return_sequences</code> → Dropout 0,1 → Dense softmax sobre los {G['vocab']} símbolos; Adam y "
     f"entropía cruzada. El notebook usa una GRU de 1024 unidades; aquí se entrenó con <b>{G['oculto']}</b> para que corriera en CPU (no había GPU "
     f"disponible). No parece ser lo que limita al modelo: con solo {mil(G['secuencias_train'])} ventanas de entrenamiento, la red "
-    f"de 512 ya sobreajusta (Figura 1), así que más unidades difícilmente ayudarían sin más texto. El notebook mantiene 512 para "
+    f"de 512 ya sobreajusta (Figura 4), así que más unidades difícilmente ayudarían sin más texto. El notebook mantiene 512 para "
     f"reproducir este reporte; cambiar a 1024 es una línea (<code>GEN_OCULTO</code>).")]
 
 ep_g, mej_g = G["epocas_corridas"], G["mejor_epoca"]
@@ -140,7 +154,7 @@ E += [p("1.3 Resultados del entrenamiento", H2),
       p(f"El entrenamiento corrió {ep_g} épocas ({dec(G['minutos'])} min); la mejor validación fue en la época {mej_g}. "
         f"Una perplejidad de {dec(G['perplejidad_val'], 2)} significa que, en promedio, el modelo duda entre unos "
         f"{dec(G['perplejidad_val'], 1)} caracteres igual de probables en cada paso (de {G['vocab']} posibles)."),
-      fig("curvas_generacion.png", 15.5, "Figura 1. Curvas de entrenamiento del modelo de caracteres. La línea punteada marca la época con menor pérdida de validación, cuyos pesos se conservan.")]
+      fig("curvas_generacion.png", 15.5, "Figura 4. Curvas de entrenamiento del modelo de caracteres. La línea punteada marca la época con menor pérdida de validación, cuyos pesos se conservan.")]
 
 E += [p("1.4 Texto generado", H2), p(
     "El notebook genera con <b>argmax</b> (siempre el carácter más probable). Se comparó con <b>muestreo con temperatura</b> "
@@ -189,6 +203,7 @@ E += [p("1.5 Análisis", H2),
 
 # ================================================================ PARTE 2
 E += h1("2. Traducción español → inglés con seq2seq")
+E += [fig("pipeline_traduccion.png", 13.5, "Figura 5. Pipeline de la Parte 2, de la carga del dataset a la evaluación con BLEU, ROUGE y F1.")]
 E += [p("2.1 Datos", H2), p(
     "<i>Combined Data es-ES</i> trae 53.043 textos de salud mental (Reddit/Twitter) con el original en inglés (<code>statement</code>) "
     "y su traducción al español (<code>statement_es_es</code>), así que sirve como corpus paralelo. La fuente es el español y el destino "
@@ -219,7 +234,7 @@ E += [p(
     f"{TR['epocas_corridas']} y conservó la {TR['mejor_epoca']} (pérdida de validación {dec(TR['val_loss'], 3)}, exactitud por palabra "
     f"{dec(TR['val_acc'], 3)}); {dec(TR['minutos_entrenamiento'])} min en CPU. Desde la época {TR['mejor_epoca'] + 1} la pérdida de "
     "entrenamiento sigue bajando y la de validación sube: sobreajuste temprano por la poca cantidad de datos."),
-    fig("curvas_traduccion.png", 15.5, "Figura 2. Curvas del seq2seq. La línea punteada marca la época conservada.")]
+    fig("curvas_traduccion.png", 15.5, "Figura 6. Curvas del seq2seq. La línea punteada marca la época conservada.")]
 
 VM = pd.read_csv(RES / "validacion_metricas.csv")
 vm = {r.metrica: r for r in VM.itertuples()}
@@ -272,8 +287,8 @@ E += [p("2.4 Resultados en test", H2),
 filas_l = [["Longitud (palabras en español)", "Frases", "BLEU", "ROUGE-1", "ROUGE-2", "ROUGE-L", "F1"]]
 filas_l += [[r.tramo, r.n, dec(r.BLEU, 2), dec(r.ROUGE1), dec(r.ROUGE2), dec(r.ROUGEL), dec(r.F1)] for r in ML.itertuples()]
 E += [Spacer(1, 4), tabla(filas_l, [4.6, 1.5, 1.6, 1.7, 1.7, 1.7, 1.6]), Spacer(1, 4),
-      fig("metricas_por_largo.png", 15.5, "Figura 3. Métricas en test por tramo de longitud de la frase en español."),
-      fig("distribucion_frases.png", 15.5, "Figura 4. Distribución de F1 y BLEU por frase en el test. El BLEU por frase de esta figura lo calcula "
+      fig("metricas_por_largo.png", 15.5, "Figura 7. Métricas en test por tramo de longitud de la frase en español."),
+      fig("distribucion_frases.png", 15.5, "Figura 8. Distribución de F1 y BLEU por frase en el test. El BLEU por frase de esta figura lo calcula "
           "sacrebleu.sentence_bleu con suavizado (sin suavizado casi todas las frases darían 0); las cifras de BLEU de las tablas son de corpus, con la implementación propia.")]
 
 EJ = [476, 17, 1203, 834, 54, 1659, 81, 1055, 756]  # filas de results/traducciones_test.csv

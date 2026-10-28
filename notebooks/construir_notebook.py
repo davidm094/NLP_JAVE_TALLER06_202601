@@ -57,10 +57,21 @@ S2S_OCULTO = 1024
 print("Keras", keras.__version__, "| backend", keras.backend.backend(), "| GPU:", GPU)
 keras.utils.set_random_seed(42)""")
 
+# ------------------------------------------------------------- Arquitectura
+md("""## Arquitectura de la solución
+Dos pipelines con la misma organización: los datos entran por `src/`, cada etapa guarda lo que produce en `results/` y el
+reporte, las figuras y este notebook leen de `results/`. Los diagramas se generan con `src/diagramas.py`.""")
+code("""import diagramas as DG
+DG.todas()
+display(Image(str(RAIZ / "figs" / "arquitectura_codigo.png")))
+display(Image(str(RAIZ / "figs" / "arquitectura_modelos.png")))""")
+
 # ------------------------------------------------------------- Parte 1
 md("""## Parte 1. Modelo de lenguaje por caracteres
 
-### 1.1 Corpus
+Pipeline de PLN de esta parte:""")
+code("""display(Image(str(RAIZ / "figs" / "pipeline_generacion.png")))""")
+md("""### 1.1 Corpus
 Del epub se toman solo los capítulos I a X (la novela). Quedan fuera la portada, los créditos, el prólogo de Orwell
 (*La libertad de prensa*), el epílogo y las notas. Queda un párrafo por línea.""")
 code("""from libro import cargar_libro, ARCHIVO, PROMPTS
@@ -129,7 +140,9 @@ pd.read_csv(RAIZ / "results" / "calidad_generacion.csv").round(2)""")
 # ------------------------------------------------------------- Parte 2
 md("""## Parte 2. Traducción español → inglés (seq2seq)
 
-### 2.1 Datos
+Pipeline de PLN de esta parte:""")
+code("""display(Image(str(RAIZ / "figs" / "pipeline_traduccion.png")))""")
+md("""### 2.1 Datos
 *Combined Data es-ES* tiene la columna `statement` (inglés original) y `statement_es_es` (traducción al español).
 Pasos de limpieza:
 

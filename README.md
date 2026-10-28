@@ -14,6 +14,24 @@ a dos tareas:
 Reporte: [`Reporte_Taller06_Generacion_Traduccion.pdf`](Reporte_Taller06_Generacion_Traduccion.pdf) ·
 Notebook: [`notebooks/Taller06_Generacion_y_Traduccion.ipynb`](notebooks/Taller06_Generacion_y_Traduccion.ipynb)
 
+## Arquitectura de la solución
+
+Dos pipelines con la misma organización: los datos entran por `src/`, cada etapa guarda lo que produce en `results/`, y el
+reporte, las figuras y el notebook leen solo de `results/` (ninguna cifra se copia a mano). Diagramas generados con
+`src/diagramas.py`.
+
+![Arquitectura del código](figs/arquitectura_codigo.png)
+
+![Arquitectura de los modelos](figs/arquitectura_modelos.png)
+
+### Pipeline de PLN — Parte 1 (generación)
+
+![Pipeline de generación](figs/pipeline_generacion.png)
+
+### Pipeline de PLN — Parte 2 (traducción)
+
+![Pipeline de traducción](figs/pipeline_traduccion.png)
+
 ## Cómo se cumple cada punto del enunciado
 
 | Punto del taller | Dónde está |
@@ -67,7 +85,8 @@ src/
   metricas.py           BLEU, ROUGE-N, ROUGE-L y F1 (implementación propia)
   evaluar_traduccion.py métricas del test, por longitud y validación contra las librerías
   correr_traduccion.py  entrena, traduce el test y evalúa (parte 2)
-  figuras.py            figuras del reporte
+  figuras.py            figuras de resultados del reporte
+  diagramas.py          diagramas de arquitectura y pipelines
   reporte.py            genera el PDF; todas las cifras se leen de results/
 notebooks/
   Taller06_Generacion_y_Traduccion.ipynb   notebook ejecutado, listo para Colab
